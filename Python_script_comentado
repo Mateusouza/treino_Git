@@ -3,7 +3,7 @@
 
 import csv # importar o modulo
 import sys # importa o modulo 
-from time import sleep 
+from time import sleep # importa um tempo de pausas
 from pymongo import MongoClient 
 from pymongo import ReadPreference 
 from bson.objectid import ObjectId 
