@@ -1,0 +1,69 @@
+#!/usr/bin/python
+#-*- coding: utf-8 -*-
+
+import csv # importar o modulo
+import sys # importa o modulo 
+from time import sleep 
+from pymongo import MongoClient 
+from pymongo import ReadPreference 
+from bson.objectid import ObjectId 
+                                    
+db1 = MongoClient('localhost:27017').easytaxi_v2_live # cria uma instancia com o meu localhost apontando meu banco .easytaxi_v2_live
+db2 = MongoClient('localhost:27017').easytaxi_v2_live # cria outra instancia com o meu localhost apontando meu banco .easytaxi_v2_live
+    
+def invalidParameter(): 
+    print('Invalid parameters\npython <script.py> <file.csv>') # mostra o parametro invalido. Com o comando 'python' mostra o script.py e o arquivo .csv
+    sys.exit(0) # apos executar o 'print' acima finaliza
+
+if len(sys.argv) < 2: # define 'sys.argv' menor que 2 ... (complementar) 
+    invalidParameter() 
+
+csv_file = sys.argv[1] 
+if str(csv_file).lower()[-4:] != '.csv':
+    invalidParameter() 
+
+try: 
+    arquivo = csv.reader(file(csv_file, 'rU'), delimiter=',') # define 'arquivo' com o arquivo csv, usando ',' para seprara 
+    csv_list = list(arquivo) # define 'csv_list' com a lista de arquivos (alterar)
+except Exception as error: # se nao usa o 'except' para mostrar 'error'
+    print(error) # mostra 'error'
+    sys.exit(0) # termina o comando (0) segundos
+
+lin = 0 # define lin com o valor 0
+print '_id,old_service,new_service' # mostra o '_id' o 'old_service' e o novo servico 'new_service' separadados 
+
+for csvrow in csv_list: # define 'csvrow' na lista do arquivo (no caso o csv_list) (alterar)
+    lin += 1 
+    if lin == 1 or not csvrow: 
+        continue
+
+    if lin % 500 == 0: 
+        sleep(2) # uma pausa de 2 segundos
+
+    print("______________") # mostra uma linha, so para dividir o script quando executado
+    driver_id = str(csvrow[0]).strip() # define driver_id como a coluna 0 do arquivo .csv (no caso o _id) 
+    query = {"_id": ObjectId(driver_id), "area_code": csvrow[2]} # define query como o campo '_id' com valor 'ObjectId(driver_id' , a area code com o valor da coluna 2 do arquivo .csv (no caso SCL)
+    print (query) # mostra a minha 'query'
+    try: 
+        doc = db1.drivers.find_one( # define 'doc' como uma busca (find) na collection 'drivers' 
+            query, { # esta buncando a query no comnado 'find'
+                "car.service": 1, # declara 'car.service' na query. ": 1 " e usado para mostrar  
+            }) # fecha o camando declarado para o 'doc' (no caso find_one) 
+        
+        new_service = csvrow[1] # declara 'new_service' como o 'servico_chile' (complementar)
+        print('Deu certo %s' % csvrow[2]) # mostra 'Deu certo' e o code (SCL) declarado no meu arquivo .csv (complementar) 
+        
+        
+        db1.drivers.update( # dar um 'update' na collection drivers
+            query, # aponta a 'query' no update
+            {"$set": { 
+                'car.service': csvrow[1] # declara o car.service como servico_chile
+            }})
+        print(doc) # mostra o doc
+        print(doc['_id']) # mostra o doc mais o _id que esta na query
+        print(doc['car']['service']) # mostra o doc mais o car.service que esta na query
+        print(new_service) # mostra o novo servico 
+
+    except Exception as error: # se nao funcionar (complementar)
+        print 'Deu errado' # se chegar no "except" mostra "Deu errado"
+        print('%s,%s' % (driver_id, error))# se chegar no except mostra o driver_id e "error"
