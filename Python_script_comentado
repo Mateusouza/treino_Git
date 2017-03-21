@@ -8,8 +8,8 @@ from pymongo import MongoClient
 from pymongo import ReadPreference 
 from bson.objectid import ObjectId 
                                     
-db1 = MongoClient('localhost:27017').easytaxi_v2_live # cria uma instancia com o meu localhost apontando meu banco .easytaxi_v2_live
-db2 = MongoClient('localhost:27017').easytaxi_v2_live # cria outra instancia com o meu localhost apontando meu banco .easytaxi_v2_live
+db1 = MongoClient('localhost:27017').xxxxxxxx # cria uma instancia com o meu localhost apontando meu banco .easytaxi_v2_live
+db2 = MongoClient('localhost:27017').xxxxxxxx # cria outra instancia com o meu localhost apontando meu banco .easytaxi_v2_live
     
 def invalidParameter(): 
     print('Invalid parameters\npython <script.py> <file.csv>') # mostra o parametro invalido. Com o comando 'python' mostra o script.py e o arquivo .csv
