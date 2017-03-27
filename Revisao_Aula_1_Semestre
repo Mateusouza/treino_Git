@@ -1,0 +1,55 @@
+#Inputs
+
+diaria = int(
+    input(
+        "Quantidade de dias: "
+        ))
+tipo_quarto = input(
+    "Tipo de quarto:"
+    )
+uso_telefone = input(
+    "Usou telefone: "
+    )
+uso_tv = input(
+    "Uso TV: "
+    )
+
+#Vars
+
+valor_diaria = 0
+valor_fone = 0
+valor_tv = 0
+valor_total = 0
+
+#Condições
+
+if tipo_quarto == 'P':
+    valor_diaria = diarias * 160
+elif tipo_quarto == 'S':
+    valor_diaria = diarias * 110
+elif tipo_quarto == 'C':
+    valor_diaria = diarias * 85
+else:
+    print("Tipo de quarto invalido")
+
+
+if valor_diaria != 0:
+    if uso_telefone == 'S':
+        valor_fone = 3
+    if uso_tv == 'S':
+        valor_tv = 3
+
+    valor_total = valor_diario + valor_fone + valor_tv
+
+#Prints
+
+    print("Hospital Universitario")
+    print("Numero de dias no hospital:" , diastia)
+    print("Tipo de quarto : " + tipo_quarto)
+    print("Valor diárias.....R$ {}".format(valor_diarias))
+    print("Valor telefone.....R$ {}".format(valor_fone))
+    print("Valor TV.....R$ {}".format(valor_tv))
+    print("Total........R$ {}".format(valor_total))
+
+
+
