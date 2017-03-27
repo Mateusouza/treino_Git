@@ -1,0 +1,23 @@
+preço = float(
+    input(
+        "Digite o valor do produto: "
+        )
+    )
+tipo_pag = input(
+    "Digite o tipo de pagamento (1, 2, 3, 4)"
+    )
+
+parcela = 0
+
+if tipo_pag == '1': #'1' != 1
+    preço = preço * 0.9
+elif tipo_pag == '2':
+    preço = preço * 0.95
+elif tipo_pag == '3':
+    parcela = preço / 2
+elif tipo_pag == '4':
+    preço= preço * 1.10
+    parcela = preço /3
+
+print("Preço total: ", preço)
+print("Parcela: ", parcela)
