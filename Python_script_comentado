@@ -3,24 +3,24 @@
 
 import csv # importar o modulo
 import sys # importa o modulo 
-from time import sleep # importa um tempo de pausas
-from pymongo import MongoClient 
-from pymongo import ReadPreference 
-from bson.objectid import ObjectId 
+from time import sleep 
+from pymongo import MongoClient # importa o conteúdo de uma exportação
+from pymongo import ReadPreference # a partir do pymongo importa ReadPreference (Ler Preferencias)
+from bson.objectid import ObjectId # a partir do bson.object importa o ObjectId
                                     
-db1 = MongoClient('localhost:27017').xxxxxxxx # cria uma instancia com o meu localhost apontando meu banco .easytaxi_v2_live
-db2 = MongoClient('localhost:27017').xxxxxxxx # cria outra instancia com o meu localhost apontando meu banco .easytaxi_v2_live
+db1 = MongoClient('localhost:27017').easytaxi_v2_live # cria uma instancia com o meu localhost apontando meu banco .easytaxi_v2_live
+db2 = MongoClient('localhost:27017').easytaxi_v2_live # cria outra instancia com o meu localhost apontando meu banco .easytaxi_v2_live
     
-def invalidParameter(): 
+def invalidParameter(): # define um parametro invalido
     print('Invalid parameters\npython <script.py> <file.csv>') # mostra o parametro invalido. Com o comando 'python' mostra o script.py e o arquivo .csv
     sys.exit(0) # apos executar o 'print' acima finaliza
 
 if len(sys.argv) < 2: # define 'sys.argv' menor que 2 ... (complementar) 
-    invalidParameter() 
+    invalidParameter() # chama o 'parametro invalido' declarado na linha a cima
 
-csv_file = sys.argv[1] 
-if str(csv_file).lower()[-4:] != '.csv':
-    invalidParameter() 
+csv_file = sys.argv[1] # define 'csv_file' como a segunda coluna do arquivo csv, no caso (service_chile)
+if str(csv_file).lower()[-4:] != '.csv': 
+    invalidParameter() # chama o parametro invalido novamente 
 
 try: 
     arquivo = csv.reader(file(csv_file, 'rU'), delimiter=',') # define 'arquivo' com o arquivo csv, usando ',' para seprara 
@@ -35,7 +35,7 @@ print '_id,old_service,new_service' # mostra o '_id' o 'old_service' e o novo se
 for csvrow in csv_list: # define 'csvrow' na lista do arquivo (no caso o csv_list) (alterar)
     lin += 1 
     if lin == 1 or not csvrow: 
-        continue
+        continue # se nao der certo a linha a cima, continue
 
     if lin % 500 == 0: 
         sleep(2) # uma pausa de 2 segundos
@@ -56,7 +56,7 @@ for csvrow in csv_list: # define 'csvrow' na lista do arquivo (no caso o csv_lis
         
         db1.drivers.update( # dar um 'update' na collection drivers
             query, # aponta a 'query' no update
-            {"$set": { 
+            {"$set": { # substitui o valor de um campo pelo valor especificado.
                 'car.service': csvrow[1] # declara o car.service como servico_chile
             }})
         print(doc) # mostra o doc
