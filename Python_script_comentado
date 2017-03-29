@@ -33,11 +33,11 @@ lin = 0 # define lin com o valor 0
 print '_id,old_service,new_service' # mostra o '_id' o 'old_service' e o novo servico 'new_service' separadados 
 
 for csvrow in csv_list: # define 'csvrow' na lista do arquivo (no caso o csv_list) (alterar)
-    lin += 1 
-    if lin == 1 or not csvrow: 
+    lin += 1 # soma lin de 1 em 1
+    if lin == 1 or not csvrow: # define lin igual a coluna 1 do arquivo css
         continue # se nao der certo a linha a cima, continue
 
-    if lin % 500 == 0: 
+    if lin % 500 == 0: # a cada 500 para por 2 segundos(definido na linha a baixo)
         sleep(2) # uma pausa de 2 segundos
 
     print("______________") # mostra uma linha, so para dividir o script quando executado
